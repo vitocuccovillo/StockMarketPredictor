@@ -10,16 +10,16 @@ def predict_price(dt, pr, x):
 
     svr_poly = SVR(kernel='poly', C=1e3, degree=2)
     svr_rbf = SVR(kernel='rbf', C=1e3, gamma=0.1)
-    svr_lin = SVR(kernel='linear', C=1e3)
+    svr_lin = SVR(kernel='linear', C=1e3, max_iter=1000)
 
     svr_rbf.fit(dt, pr)
     svr_poly.fit(dt, pr)
-    #svr_lin.fit(dt, pr)
+    svr_lin.fit(dt, pr)
 
     plt.axis([0, 300, 0, 250])
     plt.scatter(dt[:, 0], prices, color='black', label='data') # plot dei punti del dataset
     plt.plot(dates, svr_rbf.predict(dt), color='red', label='RBF') # plot delle predizioni della svm
-    #plt.plot(dates, svr_lin.predict(dt), color='green', label='Lin')
+    plt.plot(dates, svr_lin.predict(dt), color='green', label='Lin')
     plt.plot(dates, svr_poly.predict(dt), color='blue', label='Poly')
 
     plt.xlabel("date")
@@ -28,7 +28,7 @@ def predict_price(dt, pr, x):
     plt.legend()
     plt.show()
 
-    return svr_rbf.predict(x)[0], svr_poly.predict(x)[0]
+    return svr_rbf.predict(x)[0], svr_poly.predict(x)[0], svr_lin.predict(x)[0]
 
 
 def predict_price_multi(dt, pr, x):
@@ -72,9 +72,10 @@ dates = apple_data['date']
 prices = apple_data['Open']
 print(prices.head())
 
-pred1, pred2 = predict_price(dates, prices, 20180714)
+pred1, pred2, pred3 = predict_price(dates, prices, 20180714)
 
 #pred1, pred2 = predict_price_multi(dates, prices, 20180714)
 
 print(pred1)
 print(pred2)
+print(pred3)
