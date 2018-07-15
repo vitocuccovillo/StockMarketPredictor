@@ -19,7 +19,7 @@ def predict_price(dt, pr, x):
     plt.axis([0, 300, 0, 250])
     plt.scatter(dt[:, 0], prices, color='black', label='data') # plot dei punti del dataset
     plt.plot(dates, svr_rbf.predict(dt), color='red', label='RBF') # plot delle predizioni della svm
-    plt.plot(dates, svr_lin.predict(dt), color='green', label='Lin')
+    plt.plot(dates, svr_lin.predict(dt), color='green', label='Linear')
     plt.plot(dates, svr_poly.predict(dt), color='blue', label='Poly')
 
     plt.xlabel("date")
